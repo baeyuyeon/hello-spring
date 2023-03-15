@@ -5,10 +5,12 @@ import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional // jpa를 사용하기 위해선 해당 어노테이션을 추가해줘야함.
 //@Service // 스프링이 올라올 때 스프링이 컨테이너에 멤버서비스를 등록해준다,
 public class MemberService {
     private final MemberRepository memberRepository;
@@ -27,8 +29,6 @@ public class MemberService {
     public Long join(Member member){
         //같은이름이 있는 회원은 안된다!!
         validateDuplicateMember(member);
-
-
         memberRepository.save(member);
         return member.getId();
     }
